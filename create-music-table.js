@@ -2,8 +2,11 @@ const AWS = require('aws-sdk')
 
 const config = {
     'endpoint': 'http://localhost:8000',
-    'region': 'us-east-2'
+    'region': 'us-east-2',
+
 }
+
+
 const dynamodb = new AWS.DynamoDB(config)
 
 const params = {
