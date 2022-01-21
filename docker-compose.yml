@@ -14,7 +14,7 @@ services:
             AWS_ACCESS_KEY_ID: DUMMY_ID
             AWS_SECRET_ACCESS_KEY: DUMMY_KEY
             REGION: 'us-east-1'
-
+# lembrar de ler a pasta docs/tutorial aqui no root para exportar as variaveis
     dynamodb_manager:
         image: taydy/dynamodb-manager
         privileged: true
