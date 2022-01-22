@@ -14,14 +14,14 @@ export class DynamoDBRepository {
     try{
       const { TableNames } = await this.dynamoDB.listTables().promise()
       if(TableNames === undefined) return []
-      return this.parseListTablesFromAwsTypeToString(TableNames)
+      return this.parseListTablesFromAwsTypeToStringArray(TableNames)
     } catch(e){
       console.log(e)
       return new Error()
     }
   }
 
-  parseListTablesFromAwsTypeToString(tableNames: TableNameList): string[]{
+  parseListTablesFromAwsTypeToStringArray(tableNames: TableNameList): string[]{
      return tableNames!.map(tableName => tableName)
   }
 
