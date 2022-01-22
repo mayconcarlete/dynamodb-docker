@@ -1,7 +1,7 @@
 import './configs'
 import { ClientConfiguration } from 'aws-sdk/clients/dynamodb'
 import { DynamoDBRepository } from '@/repository'
-import { UserModel } from '@/models'
+import { UserModel, UserInsert } from '@/models'
 
 const localConfig:ClientConfiguration = {
   apiVersion: '2012-08-10',
@@ -17,6 +17,10 @@ const localConfig:ClientConfiguration = {
     let response = true
     // const response = await dynamoRepository.createTable(UserModel)
     console.log(await dynamoRepository.listTables())
+    await dynamoRepository.insert({
+      tableName: UserInsert.TableName,
+      data: UserInsert.Item
+    })
     console.log(response)
   }
 )()

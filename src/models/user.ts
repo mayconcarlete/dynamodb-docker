@@ -1,4 +1,4 @@
-import { CreateTableInput } from "aws-sdk/clients/dynamodb";
+import { CreateTableInput, PutItemInput } from "aws-sdk/clients/dynamodb";
 
 export const UserModel:CreateTableInput = {
   TableName: 'User',
@@ -17,5 +17,14 @@ export const UserModel:CreateTableInput = {
   ProvisionedThroughput:{
     ReadCapacityUnits: 1,
     WriteCapacityUnits: 1
+  }
+}
+
+export const UserInsert:PutItemInput = {
+  TableName: 'User',
+  Item:{
+    Email: {
+      S: 'maycon.carlete@gmail.com'
+    }
   }
 }

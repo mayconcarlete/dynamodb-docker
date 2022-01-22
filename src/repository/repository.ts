@@ -1,6 +1,11 @@
 import aws, { DynamoDB } from 'aws-sdk'
 import { ClientConfiguration, CreateTableInput, TableNameList } from 'aws-sdk/clients/dynamodb'
 
+
+export type InsertInput<T=any> = {
+  tableName: string
+  data: T
+}
 export class DynamoDBRepository {
   dynamoDB: DynamoDB
 
@@ -34,4 +39,14 @@ export class DynamoDBRepository {
         return false
       }
     }
+
+  async insert(input: InsertInput):Promise<boolean>{
+    await this.dynamoDB.putItem(
+      {
+        TableName: input.tableName,
+        Item: input.data
+      }
+    ).promise()
+    return true
+  }
 }
