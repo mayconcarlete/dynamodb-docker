@@ -1,19 +1,20 @@
+import './src/configs'
 import aws from 'aws-sdk'
 import DynamoDB, { CreateTableInput, CreateTableOutput } from 'aws-sdk/clients/dynamodb'
 
 
 
 class DynamoModel {
-  dynamoDb: DynamoDB
-  constructor(){
-     this.dynamoDb = new aws.DynamoDB(
+  constructor(
+     private readonly dynamoDb:DynamoDB = new aws.DynamoDB(
        {
           apiVersion: '2012-08-10',
           region: 'us-east-1',
           endpoint: 'http://localhost:8000'
         }
       )
-  }
+  ){}
+
 
   async createTable(tableData: CreateTableInput){
     try{
@@ -61,6 +62,6 @@ const tableData:CreateTableInput = {
 }
 
 const dynamoRepository = new DynamoModel()
-dynamoRepository.listTables().then(console.log)
+// dynamoRepository.listTables().then(console.log)
 
 console.log('Hello world')
