@@ -1,3 +1,1 @@
-export class User {
-
-}
+export * from './repository'
