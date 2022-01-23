@@ -1,7 +1,7 @@
 import './configs'
-import { ClientConfiguration } from 'aws-sdk/clients/dynamodb'
+import { ClientConfiguration, CreateTableInput } from 'aws-sdk/clients/dynamodb'
 import { DynamoDBRepository } from '@/repository'
-import { UserModel, UserInsert } from '@/models'
+import { ChatService, UserInsert } from '@/models'
 
 const localConfig:ClientConfiguration = {
   apiVersion: '2012-08-10',
@@ -11,17 +11,42 @@ const localConfig:ClientConfiguration = {
   secretAccessKey: 'DUMMY_KEY'
 }
 ;
+
 (
   async() => {
+    const UserModel:CreateTableInput = {
+      TableName: 'Chat',
+      KeySchema:[
+        {
+          AttributeName: 'PK',
+          KeyType: 'HASH'
+        },
+        {
+          AttributeName: 'SK',
+          KeyType: 'RANGE'
+        }
+      ],
+      AttributeDefinitions:[
+        {
+          AttributeName: 'PK',
+          AttributeType: 'S'
+        },
+        {
+          AttributeName: 'SK',
+          AttributeType: 'S'
+        }
+      ],
+      ProvisionedThroughput:{
+        ReadCapacityUnits: 1,
+        WriteCapacityUnits: 1
+      }
+    }
     const dynamoRepository = new DynamoDBRepository(localConfig)
-    let response = true
     // const response = await dynamoRepository.createTable(UserModel)
     console.log(await dynamoRepository.listTables())
-    await dynamoRepository.insert({
-      tableName: UserInsert.TableName,
-      data: UserInsert.Item
-    })
+    const response = await dynamoRepository.insert()
     console.log(response)
+    console.log(new Date().toISOString())
   }
 )()
 console.log('Hello world')
