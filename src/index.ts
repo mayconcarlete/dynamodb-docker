@@ -46,7 +46,7 @@ const localConfig:ClientConfiguration = {
     console.log(await dynamoRepository.listTables())
     // const response = await dynamoRepository.insert()
     const response = await dynamoRepository.get()
-    console.log(response)
+    console.log(JSON.stringify(response))
     console.log(new Date().toISOString())
   }
 )()

@@ -96,11 +96,11 @@ export class DynamoDBRepository {
       TableName: 'Chat',
       FilterExpression: 'contains(#n, :nname)',
       ExpressionAttributeNames:{
-        "#n": "Name"
+        "#n": "SK"
       },
       ExpressionAttributeValues:{
         ":nname":{
-          S:"Maycon"
+          S:"carolina"
         }
       }
     }).promise()
