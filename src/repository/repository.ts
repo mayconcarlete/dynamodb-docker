@@ -113,8 +113,24 @@ export class DynamoDBRepository {
     ).promise()
     return response
   }
-
-  async queryByScan(pk: string):Promise<any>{
+  async searchByQuery(pk: string):Promise<any>{
+    const response = await this.dynamoDB.query(
+      {
+        TableName: 'Chat',
+        KeyConditionExpression: '#pk = :pk',
+        ExpressionAttributeNames:{
+          '#pk': 'PK'
+        },
+        ExpressionAttributeValues:{
+          ':pk': {
+            S: pk
+          }
+        }
+      }
+    ).promise()
+    return response
+  }
+  async searchByScan(pk: string):Promise<any>{
     const response = await this.dynamoDB.scan({
       TableName: 'Chat',
       FilterExpression: 'contains(#pk, :pk)',
@@ -129,4 +145,22 @@ export class DynamoDBRepository {
     }).promise()
     return response
   }
+  async searchByGetItem(value: string):Promise<any>{
+    const response = await this.dynamoDB.getItem(
+      {
+        TableName: 'Chat',
+        Key:{
+          PK:{
+            S:value
+          },
+          SK:{
+            S:'PROFILE#maycon.carlete@gmail.com'
+          }
+        }
+      }
+    ).promise()
+
+    return response
+  }
+
 }
