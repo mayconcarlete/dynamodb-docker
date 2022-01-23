@@ -92,15 +92,38 @@ export class DynamoDBRepository {
     //   }
     // })
     // const response = await this.dynamoDB.getItem().promise()
+
+    // const response = await this.dynamoDB.scan({
+    //   TableName: 'Chat',
+    //   FilterExpression: 'contains(#n, :nname)',
+    //   ExpressionAttributeNames:{
+    //     "#n": "SK"
+    //   },
+    //   ExpressionAttributeValues:{
+    //     ":nname":{
+    //       S:"carolina"
+    //     }
+    //   }
+    // }).promise()
+    const response = await this.dynamoDB.query(
+      {
+        TableName:'Chat',
+        KeyConditionExpression: "co"
+      }
+    ).promise()
+    return response
+  }
+
+  async queryByScan(pk: string):Promise<any>{
     const response = await this.dynamoDB.scan({
       TableName: 'Chat',
-      FilterExpression: 'contains(#n, :nname)',
+      FilterExpression: 'contains(#pk, :pk)',
       ExpressionAttributeNames:{
-        "#n": "SK"
+        '#pk':'PK'
       },
       ExpressionAttributeValues:{
-        ":nname":{
-          S:"carolina"
+        ':pk':{
+          S: pk
         }
       }
     }).promise()

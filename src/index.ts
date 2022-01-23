@@ -45,7 +45,7 @@ const localConfig:ClientConfiguration = {
     // const response = await dynamoRepository.createTable(UserModel)
     console.log(await dynamoRepository.listTables())
     // const response = await dynamoRepository.insert()
-    const response = await dynamoRepository.get()
+    const response = await dynamoRepository.queryByScan('rafael')
     console.log(JSON.stringify(response))
     console.log(new Date().toISOString())
   }
