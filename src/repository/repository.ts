@@ -42,22 +42,40 @@ export class DynamoDBRepository {
 
   async insert():Promise<boolean | RepositoryError>{
     try{
-      await this.dynamoDB.putItem(
-        {
-          TableName: 'Chat',
-          Item: {
-            PK:{
-              S: 'USER#maycon.carlete@gmail.com',
-            },
-            SK: {
-              S: 'PROFILE#maycon.carlete@gmail.com'
-            },
-            Name: {
-              S: 'Maycon Carlete'
-            }
+      const user =  {
+        TableName: 'Chat',
+        Item: {
+          PK:{
+            S: 'USER#rafael.srios@gmail.com',
+          },
+          SK: {
+            S: 'PROFILE#rafael.srios@gmail.com'
+          },
+          Name: {
+            S: 'Maycon Carlete'
           }
         }
-      ).promise()
+      }
+      const chat = {
+        TableName: 'Chat',
+        Item:{
+          PK: {
+            S:'CHAT#maycon.carlete@gmail.com#rafael.srios@gmail.com'
+          },
+          SK:{
+            S: new Date().toISOString()
+          }
+        }
+      }
+      const message = {
+        TableName: 'Chat',
+        Item: {
+          PK:{
+            S: 'MESSAGE#'
+          }
+        }
+      }
+      await this.dynamoDB.putItem().promise()
       return true
     } catch(e){
       if(e instanceof Error) return new RepositoryError(e)
@@ -65,12 +83,24 @@ export class DynamoDBRepository {
     }
   }
 
-  async get(email:string):Promise<any>{
-    const response = await this.dynamoDB.getItem({
-      TableName:'User',
-      Key:{
-        Email:{
-          S: email
+  async get():Promise<any>{
+    // const response = await this.dynamoDB.query({
+    //   TableName: 'Chat',
+    //   FilterExpression: `contains(CHAT#, :rafael.srios@gmail.com)`,
+    //   ExpressionAttributeNames:{
+
+    //   }
+    // })
+    // const response = await this.dynamoDB.getItem().promise()
+    const response = await this.dynamoDB.scan({
+      TableName: 'Chat',
+      FilterExpression: 'contains(#n, :nname)',
+      ExpressionAttributeNames:{
+        "#n": "Name"
+      },
+      ExpressionAttributeValues:{
+        ":nname":{
+          S:"Maycon"
         }
       }
     }).promise()

@@ -44,7 +44,8 @@ const localConfig:ClientConfiguration = {
     const dynamoRepository = new DynamoDBRepository(localConfig)
     // const response = await dynamoRepository.createTable(UserModel)
     console.log(await dynamoRepository.listTables())
-    const response = await dynamoRepository.insert()
+    // const response = await dynamoRepository.insert()
+    const response = await dynamoRepository.get()
     console.log(response)
     console.log(new Date().toISOString())
   }
