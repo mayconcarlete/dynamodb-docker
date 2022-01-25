@@ -162,5 +162,4 @@ export class DynamoDBRepository {
 
     return response
   }
-
 }
