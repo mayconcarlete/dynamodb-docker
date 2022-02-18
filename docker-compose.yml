@@ -6,7 +6,7 @@ services:
         image: "amazon/dynamodb-local:latest"
         container_name: dynamodb_local
         ports:
-            - "8000:8000"
+            - "4200:8000"
         volumes:
             - ".:/home/dynamodblocal/data"
         working_dir:  /home/dynamodblocal
