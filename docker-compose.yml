@@ -13,13 +13,19 @@ services:
         environment:
             AWS_ACCESS_KEY_ID: DUMMY_ID
             AWS_SECRET_ACCESS_KEY: DUMMY_KEY
-            REGION: 'us-east-1'
+            REGION: 'us-west-2'
 # lembrar de ler a pasta docs/tutorial aqui no root para exportar as variaveis
     dynamodb_manager:
+        container_name: manager
         image: taydy/dynamodb-manager
         privileged: true
         restart: always
         depends_on:
             - dynamodb_local
         ports:
-            - "8080:80"
+            - "5000:80"
+    redis:
+        container_name: redis
+        image: redis
+        ports:
+          - 6379:6379
